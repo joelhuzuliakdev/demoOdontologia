@@ -1351,6 +1351,26 @@ import Layout from '../layouts/Layout.astro';
 	.wa-btn:hover .wa-tooltip { opacity: 1; }
 
 	/* ═══════════════════════════════════════
+	   FIX: neutralizar animaciones horizontales
+	   en pantallas ≤ 1024px para evitar
+	   scroll lateral
+	═══════════════════════════════════════ */
+	@media (max-width: 1024px) {
+		/* Forzar clipping horizontal en todo el sitio */
+		html, body { overflow-x: hidden; }
+
+		/* from-left y from-right pasan a animar solo en Y */
+		.reveal.from-left,
+		.reveal.from-right {
+			transform: translateY(40px);
+		}
+		.reveal.from-left.visible,
+		.reveal.from-right.visible {
+			transform: none;
+		}
+	}
+
+	/* ═══════════════════════════════════════
 	   RESPONSIVE — TABLET (≤ 1024px)
 	═══════════════════════════════════════ */
 	@media (max-width: 1024px) {
@@ -1472,7 +1492,6 @@ import Layout from '../layouts/Layout.astro';
 		display: none;
 		position: fixed;
 		inset: 0;
-		/* z-index mayor al navbar (100) para que tape todo */
 		z-index: 200;
 		background: rgba(247,244,239,0.98);
 		backdrop-filter: blur(10px);
@@ -1499,7 +1518,6 @@ import Layout from '../layouts/Layout.astro';
 		border: none;
 		cursor: pointer;
 		color: var(--charcoal);
-		/* z-index mayor al propio menú */
 		z-index: 201;
 	}
 </style>
